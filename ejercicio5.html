@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ejercicio 5</title>
+  </head>
+
+  <body>
+    <h1>Ejercicio 5</h1>
+    <script>
+        
+      function realizarPedido() {
+        console.log("Realizar Pedido...");
+        setTimeout(() => {
+          console.log("Pedido Realizado...");
+        }, 1000);
+        prepararPedido();
+      }
+      function prepararPedido() {
+        console.log("Preprando Pedido...");
+        setTimeout(() => {
+          console.log("Pedido Preparado...");
+        }, 2000);
+        entregarPedido();
+      }
+      function entregarPedido() {
+        console.log("Entregar Pedido...");
+        setTimeout(() => {
+          console.log("Pedido entregado...");
+        }, 1000);
+      }
+        realizarPedido();
+
+    //   function realizarPedido(callback) {
+    //     console.log("Realizar Pedido...");
+    //     setTimeout(() => {
+    //       console.log("Pedido Realizado...");
+    //       callback();
+    //     }, 1000);
+    //     prepararPedido();
+    //   }
+    //   function prepararPedido(callback) {
+    //     console.log("Preprando Pedido...");
+    //     setTimeout(() => {
+    //       console.log("Pedido Preparado...");
+    //       callback();
+    //     }, 2000);
+    //     entregarPedido();
+    //   }
+    //   function entregarPedido() {
+    //     console.log("Entregar Pedido...");
+    //     setTimeout(() => {
+    //       console.log("Pedido entregado...");
+    //       callback();
+    //     }, 1000);
+    //   }
+    // se utiliza para que se ejecute la funcion callback
+    //   realizarPedido(function(){ 
+    //     prepararPedido(function(){
+    //       entregarPedido();
+    //     });
+    //   });
+
+// resolve & reject
+    //   function realizarPedido() {
+    //     return new Promise((resolve, reject) => {
+    //       console.log("Realizar Pedido...");
+    //       setTimeout(() => {
+    //         console.log("Pedido Realizado...");
+    //         resolve();
+    //       }, 1000);
+    //     });
+    //   }
+    //   function prepararPedido() {
+    //     console.log("Preprando Pedido...");
+    //     return new Promise((resolve, reject) => {
+    //       setTimeout(() => {
+    //         console.log("Pedido Preparado...");
+    //         resolve();
+    //       }, 2000);
+    //     });
+    //   }
+    //   function entregarPedido() {
+    //     console.log("Entregar Pedido...");
+    //     return new Promise((resolve, reject) => {
+    //       setTimeout(() => {
+    //         console.log("Pedido entregado...");
+    //         resolve();
+    //       }, 1000);
+    //     });
+    //   }
+    //   realizarPedido()
+    //     .then(() => prepararPedido())
+    //     .then(() => entregarPedido());
+
+    async function gestionarPedido() {
+        await realizarPedido();
+        await prepararPedido();
+        await entregarPedido();
+    }
+    gestionarPedido();
+
+
+    </script>
+  </body>
+</html>

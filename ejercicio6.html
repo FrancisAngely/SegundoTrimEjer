@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ejercicio 6</title>
+    <style>
+        #Barra {
+            width: 100%;
+            background-color: #f3f3f3;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        #progreso {
+            height: 30px;
+            width: 0;
+            background-color: #4caf50;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <!--Ejercicio 6: Diseña un programa en JavaScript que simule la descarga de un archivo 
+    mostrando el progreso en tiempo real en la consola. 
+    El flujo debe gestionarse usando callbacks, promesas, y con
+    async/await. Al ejecutar el programa, simula el siguiente flujo:
+
+    • iniciarDescarga(nombreArchivo, callback): Recibe el nombre del archivo y simula un retraso de
+    2 segundos antes de confirmar que la descarga ha comenzado.
+
+    • progresarDescarga(nombreArchivo, callback): Simula el progreso de descarga cada 1 segundo,
+    mostrando mensajes como "Descargando... 25%", "Descargando... 50%", hasta llegar al 100%.
+
+    • finalizarDescarga(nombreArchivo, callback): Simula la finalización de la descarga después de 2
+    segundos, mostrando un mensaje como "Descarga completada: archivo.txt".
+
+    Como extra: Agrega una barra de progreso que debe avanzar con cada incremento de porcentaje de
+    la descarga y crea un botón que inicie la descarga-->
+
+    <h1>Ejercicio 6 - Simulacion de Descarga</h1>
+    <button id="inicio">Iniciar Descarga</button>
+    <div id="Barra">
+        <div id="progreso"></div>
+    </div>
+
+    <script>
+        // function iniciarDescarga(nombreArchivo, callback) {
+        //     console.log(`Iniciando descarga de ${nombreArchivo}...`);
+        //     setTimeout(() => {
+        //         console.log(`Descarga de ${nombreArchivo} ha comenzado.`);
+        //         callback();
+        //     }, 2000);
+        // }
+
+        // function progresarDescarga(nombreArchivo, callback) {
+        //     let progreso = 0;
+        //     const intervalo = setInterval(() => {
+        //         progreso += 25;
+        //         console.log(`Descargando... ${progreso}%`);
+        //         if (progreso >= 100) {
+        //             clearInterval(intervalo);
+        //             callback();
+        //         }
+        //     }, 1000);
+        // }
+
+        // function finalizarDescarga(nombreArchivo, callback) {
+        //     setTimeout(() => {
+        //         console.log(`Descarga completada: ${nombreArchivo}`);
+        //         callback();
+        //     }, 2000);
+        // }
+
+        // function descargarArchivo(nombreArchivo) {
+        //     iniciarDescarga(nombreArchivo, () => {
+        //         progresarDescarga(nombreArchivo, () => {
+        //             finalizarDescarga(nombreArchivo, () => {
+        //                 console.log("Proceso de descarga finalizado.");
+        //             });
+        //         });
+        //     });
+        // }
+        // document.getElementById("inicio").addEventListener("click", () => {
+        //     descargarArchivo("archivo.txt");
+        // }); 
+
+
+        //Promesas
+        function iniciarDescarga(nombreArchivo) {
+            return new Promise((resolve, reject) => {
+                console.log(`Iniciando descarga de ${nombreArchivo}...`);
+                setTimeout(() => {
+                    console.log(`Descarga de ${nombreArchivo} ha comenzado.`);
+                    resolve();
+                }, 2000);
+            });
+        }
+
+        function progresarDescarga(nombreArchivo) {
+            console.log('progeso de descargar iniciado...');
+            return new Promise((resolve, reject) => {
+                let progreso = 0;
+                const intervalo = setInterval(() => {
+                    progreso += 25;
+                    console.log(`Descargando... ${progreso}%`);
+                    const progresoElemento = document.getElementById("progreso");
+                    progresoElemento.style.width = progreso + '%';
+                    if (progreso >= 100) {
+                        clearInterval(intervalo);
+                        resolve();}
+                }, 1000);
+            });
+        }
+
+        function finalizarDescarga(nombreArchivo) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    console.log(`Descarga completada: ${nombreArchivo}`);
+                    resolve();
+                }, 2000);
+            });
+        }
+
+        async function descargarArchivo(nombreArchivo) {
+            await iniciarDescarga(nombreArchivo);
+            await progresarDescarga(nombreArchivo);
+            await finalizarDescarga(nombreArchivo);
+            console.log("Proceso de descarga finalizado.");
+        }
+
+        document.getElementById("inicio").addEventListener("click", () => {
+            descargarArchivo("archivo.txt");
+        });
+
+    </script>
+</body>
+
+</html>
